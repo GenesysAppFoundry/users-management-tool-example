@@ -1,0 +1,18 @@
+{
+  "name": "nodejs",
+  "version": "0.0.1",
+  "description": "Genesys Cloud Tool for users management",
+  "main": "GCUsersTool.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node GCUsersTool.js"
+  },
+  "author": "JSM",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "*",
+    "purecloud-platform-client-v2": "*",
+    "fast-csv": "*",
+    "@lifeomic/attempt": "*"
+  }
+}

@@ -1,0 +1,81 @@
+{
+    "action": "export or ACDAutoAnswer",
+    "oauth": {
+        "clientID": "Your Genesys Cloud OAuth client ClientID (Client Credentials Grant)",
+        "clientSecret": "Your Genesys Cloud OAuth client ClientSecret (Client Credentials Grant)",
+        "orgRegion": "Your Genesys Cloud Org Region - i.e mypurecloud.com, mypurecloud.ie, ..."
+    },
+    "selectUsers": {
+        "include": {
+            "active": true,
+            "inactive": false,
+            "deleted": false
+        },
+        "byType": "skill",
+        "by": "value",
+        "byValue": "TestSkill1,TestSkill2",
+        "byFile": "",
+        "byFileAs": "json",
+        "byFileAttributeName": "email",
+        "withCustomFilter": [
+            {
+                "fields": [
+                    "routingSkills"
+                ],
+                "values": [
+                    "TestSkill1"
+                ],
+                "type": "EXACT"
+            },
+            {
+                "fields": [
+                    "routingSkills"
+                ],
+                "values": [
+                    "TestSkill2"
+                ],
+                "type": "EXACT"
+            },
+            {
+                "fields": [
+                    "department"
+                ],
+                "values": [
+                    "Contact Center"
+                ],
+                "type": "EXACT"
+            }
+        ]
+    },
+    "acdAutoAnswer": {
+        "value": false
+    },
+    "export": {
+        "as": "jsonArray",
+        "file": "./GCExportUsersTool_Export_001",
+        "resolve": {
+            "locations": false,
+            "groups": false,
+            "managers": false
+        },
+        "extended": {
+            "queues": false,
+            "directReports": false,
+            "managers": false,
+            "phoneAlertTimeouts": false,
+            "rolesDivisions": false
+        },
+        "include": {
+            "hr": false,
+            "biography": false,
+            "profileSkills": false,
+            "languagePreference": false,
+            "certifications": false,
+            "locations": false,
+            "skills": false,
+            "languages": false,
+            "roles": false,
+            "groups": false
+        }
+    }
+}

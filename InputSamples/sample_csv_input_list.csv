@@ -1,0 +1,3 @@
+name,email,phone_work,extension,title,department,email_manager,location_work,roles_divisions,queues,division,skills,hire_date
+"ExampleUser1","example1@domain.com",,,"Team Lead","Contact Center",,,"Outbound Admin",,,,
+"ExampleUser2","example2@domain.com",,,"CC Agent","Contact Center",,,"Outbound Admin",,,,

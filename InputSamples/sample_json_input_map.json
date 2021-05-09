@@ -1,0 +1,14 @@
+{
+    "1234": {
+        "name": "ExampleUser1",
+        "email": "example1@domain.com",
+        "title": "Team Lead",
+        "department": "Contact Center"
+    },
+    "5678": {
+        "name": "ExampleUser2",
+        "email": "example2@domain.com",
+        "title": "CC Agent",
+        "department": "Contact Center"
+    }
+}
