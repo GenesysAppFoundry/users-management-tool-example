@@ -437,6 +437,9 @@ const loadToolSettings = function () {
                     if (argParamValue && (argParamValue.startsWith('-') == false)) {
                         let isKnownCommandArg = true;
                         switch (argValue) {
+                            case '-settings':
+                                toolSettings.settings = argParamValue;
+                                break;
                             case '-action':
                                 toolSettings.action = argParamValue;
                                 break;
