@@ -1,58 +1,53 @@
 {
-    "action": "export or ACDAutoAnswer",
+    "debugLevel": 1,
+    "action": "export or updateACDAutoAnswer or updateRoles or test",
+    "verifyInput": 0,
     "oauth": {
         "clientID": "Your Genesys Cloud OAuth client ClientID (Client Credentials Grant)",
         "clientSecret": "Your Genesys Cloud OAuth client ClientSecret (Client Credentials Grant)",
         "orgRegion": "Your Genesys Cloud Org Region - i.e mypurecloud.com, mypurecloud.ie, ..."
     },
     "selectUsers": {
-        "include": {
-            "active": true,
-            "inactive": false,
-            "deleted": false
-        },
+        "include": [
+            "active",
+            "inactive"
+        ],
         "byType": "skill",
         "by": "value",
         "byValue": "TestSkill1,TestSkill2",
         "byFile": "",
         "byFileAs": "json",
         "byFileAttributeName": "email",
-        "withCustomFilter": [
-            {
-                "fields": [
-                    "routingSkills"
-                ],
-                "values": [
-                    "TestSkill1"
-                ],
-                "type": "EXACT"
-            },
-            {
-                "fields": [
-                    "routingSkills"
-                ],
-                "values": [
-                    "TestSkill2"
-                ],
-                "type": "EXACT"
-            },
-            {
-                "fields": [
-                    "department"
-                ],
-                "values": [
-                    "Contact Center"
-                ],
-                "type": "EXACT"
-            }
-        ]
+        "fieldSeparator": ",",
+        "customFilterFile": "./DefaultSelectUsersWithCustomFilter.json",
+        "filterConditionsAsAnd": false,
+        "enablePostSelectionFilter": false,
+        "useQ64Pagination": true,
+        "useGroupsSearch": false
     },
-    "acdAutoAnswer": {
-        "value": false
+    "update": {
+        "acdAutoAnswer": {
+            "turnOn": false,
+            "forceUpdate": false
+        },
+        "roles": {
+            "remove": [
+                "CustomForUserQueues",
+                "PREMIUM_EXAMPLE_Role"
+            ],
+            "add": {
+                "PREMIUM_EXAMPLE_Role": [
+                    "@User",
+                    "CustomDivision",
+                    "ThirdDivision"
+                ]
+            }
+        }
     },
     "export": {
         "as": "jsonArray",
         "file": "./GCExportUsersTool_Export_001",
+        "fieldSeparator": ",",
         "resolve": {
             "locations": false,
             "groups": false,

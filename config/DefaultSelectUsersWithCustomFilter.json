@@ -1,0 +1,29 @@
+[
+    {
+        "fields": [
+            "routingSkills"
+        ],
+        "values": [
+            "TestSkill1"
+        ],
+        "type": "EXACT"
+    },
+    {
+        "fields": [
+            "routingSkills"
+        ],
+        "values": [
+            "TestSkill2"
+        ],
+        "type": "EXACT"
+    },
+    {
+        "fields": [
+            "department"
+        ],
+        "values": [
+            "Support"
+        ],
+        "type": "EXACT"
+    }
+]

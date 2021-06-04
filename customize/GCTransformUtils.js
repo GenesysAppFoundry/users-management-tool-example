@@ -2,7 +2,7 @@
 
 /*
 ------------------------------------------------------------------------------
-* Copyright 2021 JSM@Genesys.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2021 JSM (Genesys.com), Inc. or its affiliates. All Rights Reserved.
 ------------------------------------------------------------------------------
 */
 
@@ -349,6 +349,47 @@
 //#endregion
 
 /*
+-----------------------------------------------------------------------------------
+* Post Selection Custom filter (input: JSON user information, output: true/false)
+-----------------------------------------------------------------------------------
+*/
+
+//#region Post Selection Custom filter
+
+const postSelectionFilter = function (gcTool, user) {
+
+    // TODO - REPLACE WITH YOUR OWN CODE
+    // Implement your function to filter users to select, based on a more complex logic
+    // return false to skip user, return true to keep it
+
+    try {
+        // Skill TestSkill1 >=1 and Language English >=2
+        if (user.skills && user.skills.length > 0) {
+            let skillAssigned = user.skills.filter((skill) => skill.name === 'TestSkill1' && skill.proficiency >= 1);
+            if (skillAssigned && skillAssigned.length > 0) {
+                if (user.languages && user.languages.length > 0) {
+                    let languageAssigned = user.languages.filter((language) => language.name === 'English' && language.proficiency >= 2);
+                    if (languageAssigned && languageAssigned.length > 0) {
+                        if (user.languages && user.languages.length > 0) {
+                            // Select User
+                            return true;
+
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    } catch (err) {
+        console.log(`Error - Ignoring json object - Proceeding...`);
+        console.error(`Error: ${JSON.stringify(err, null, 4)}`);
+        return false;
+    }
+}
+
+//#endregion
+
+/*
 ------------------------------------------------------------------------------
 * Transform JSON User for export
 ------------------------------------------------------------------------------
@@ -356,9 +397,11 @@
 
 //#region Transform to JSON
 
-const jsonTransform = function (user, settings) {
-    // TODO
+const jsonTransform = function (gcTool, user) {
+
+    // TODO - REPLACE WITH YOUR OWN CODE
     // Implement your function to transform collected User information to your own JSON format
+    // return null to skip user
 
     try {
         let transformedUser = { ...user };
@@ -376,9 +419,9 @@ const jsonTransform = function (user, settings) {
 
 //#region Transform to CSV
 
-const csvTransformInit = function (settings) {
+const csvTransformInit = function (gcTool) {
 
-    // TODO
+    // TODO - REPLACE WITH YOUR OWN CODE
     // Implement your function to transform collected User information to your own CSV format
 
     // Return Headers (Column Names)
@@ -387,10 +430,11 @@ const csvTransformInit = function (settings) {
     return csvHeaders;
 }
 
-const csvTransform = function (user, settings) {
+const csvTransform = function (gcTool, user) {
 
-    // TODO
+    // TODO - REPLACE WITH YOUR OWN CODE
     // Implement your function to transform collected User information to your own CSV format
+    // return null to skip user
 
     // Return rown ["", "", "", ...]
     try {
@@ -422,6 +466,7 @@ const csvTransform = function (user, settings) {
 */
 
 module.exports = {
+    postSelectionFilter,
     jsonTransform,
     csvTransformInit,
     csvTransform
