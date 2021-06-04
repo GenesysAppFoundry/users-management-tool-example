@@ -308,7 +308,7 @@ _Ex_:
         * Using the configuration file:
             - ***$.selectUsers.filterConditionsAsAnd**: true/false*
 
-        Types supporting AND condition: skill names, language names, location names, group names, profile skills, certifications.
+        Types supporting AND condition: skill names, language names, location names, group names, profile skills, certifications.  
         When using an AND condition, the maximum number of input values is limited to 9 (API constraint).
 
     5. The tool can also warn the user, or interrupt the processing, if a provided input value does not exist in the system.
@@ -318,10 +318,10 @@ _Ex_:
         * Using the configuration file:
             - ***$.verifyInput**: 0/1/2*
 
-        The verification applies to group names, skill names, language names, divisions, locations, and roles.
-        When set to 0, there is no verification.
-        When set to 1, the tool verifies that the input values exist, warns the user about the ones which don't and continues the processing.
-        When set to 2, the tool verifies that the input values exist, warns the user about the ones which don't and interrupts processing.
+        The verification applies to group names, skill names, language names, divisions, locations, and roles.  
+        When set to 0, there is no verification.  
+        When set to 1, the tool verifies that the input values exist, warns the user about the ones which don't and continues the processing.  
+        When set to 2, the tool verifies that the input values exist, warns the user about the ones which don't and interrupts processing.  
 
     6. Once the users have been selected (via the search), the tool can apply another filter, if a more complex selection logic is needed.
 
@@ -346,7 +346,8 @@ _Ex_:
 
     Users in *'deleted'* state are ignored.
 
-    With *'true'* or *'false'*, the tool only updates the users if they are in a different acdAutoAnswer status. With *'forceTrue'* or *'forceFalse'*, the tool will request to update all users, whatever their acdAutoAnswer status is.
+    With *'true'* or *'false'*, the tool only updates the users if they are in a different acdAutoAnswer status.  
+    With *'forceTrue'* or *'forceFalse'*, the tool will request to update all users, whatever their acdAutoAnswer status is.  
 
 * Define the roles to add or to remove (on operation: action = updateRoles):
 
@@ -399,6 +400,69 @@ _Ex_:
 
         If you select csv or json, the tool will trigger the *jsonTransform* or the *csvTransform* functions (in *./customize/GCTransformUtils.js*) for each of the selected users. You can adapt these functions to filter, to transform the data based on your needs.
     
+### Using Custom Filter
+
+You can use a custom filter to perform a more complex search, which involves different types of fields.
+
+1. Define your custom filter in a json file (JSON based array of search criteria)
+
+    You can define up to 9 search criteria.  
+    An additional search criteria to select active, inactive and deleted is reserved and managed by the tool.
+
+    You can check the following [request schema to see what is allowed for the search criteria (i.e. UserSearchCriteria)](https://developer.genesys.cloud/api/rest/v2/users/#post-api-v2-users-search).  
+    *Ex: type set to EXACT, STARTS_WITH, CONTAINS, REGEX, TERM, TERMS, REQUIRED_FIELDS, MATCH_ALL, QUERY_STRING*  
+    *Ex: fields such as id, email, name, department, routingSkills, profileSkills, certifications, languages, addresses, primaryContactInfo, manager.id, divisionId, groups.official.guid and groups.social.guid, location.location.value.guid*  
+
+2. Configure the tool to leverage this file in your search
+
+    * Using the command line arguments:
+        - ***-customFilterFile, -sfilter**: your file name*
+    * Using the configuration file:
+        - ***$.selectUsers.customFilterFile**: your file name*
+
+3. Configure the tool to perform a serach using a custom filter
+
+    * Using the command line arguments:
+        - ***-selectByType, -sbytype**: custom*
+    * Using the configuration file:
+        - ***$.selectUsers.byType**: 'custom'*
+
+
+
+*Ex: Users who have TestSkill1 and TestSkill2 and belong to Support department*
+```json
+[
+    {
+        "fields": [
+            "routingSkills"
+        ],
+        "values": [
+            "TestSkill1"
+        ],
+        "type": "EXACT"
+    },
+    {
+        "fields": [
+            "routingSkills"
+        ],
+        "values": [
+            "TestSkill2"
+        ],
+        "type": "EXACT"
+    },
+    {
+        "fields": [
+            "department"
+        ],
+        "values": [
+            "Support"
+        ],
+        "type": "EXACT"
+    }
+]
+```
+
+
 
 # Using the tool
 
@@ -417,8 +481,8 @@ _Ex_:
 ## Usage
 
 _Ex 1_:
-* `node GCUsersTool.js -settings ./MyToolSettings.json -action export -selectByType skill -selectBy value -sbyval "TestSkill1, TestSkill2"`
-* `npm start -- -settings ./MyToolSettings.json -action export -selectByType skill -selectBy value -sbyval "TestSkill1, TestSkill2"`
+* `node GCUsersTool.js -settings ./config/MyToolSettings.json -action export -selectByType skill -selectBy value -sbyval "TestSkill1, TestSkill2"`
+* `npm start -- -settings ./config/MyToolSettings.json -action export -selectByType skill -selectBy value -sbyval "TestSkill1, TestSkill2"`
 
 _Ex 2_:
 * `node GCUsersTool.js -action ACDAutoAnswer -enableACDAutoAnswer true -selectByType skill -selectBy value -sbyval "TestSkill1, TestSkill2"`
